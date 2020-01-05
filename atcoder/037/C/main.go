@@ -1,3 +1,4 @@
+// Ref: https://atcoder.jp/contests/arc037/submissions/6252689
 package main
 
 import (
@@ -22,6 +23,8 @@ func Search(n int, cond func(i int) bool) int {
 }
 
 func Solve(in io.Reader, out io.Writer) {
+	// n 列数
+	// k 求めたい位置
 	var n, k int
 	var as, bs []int
 
@@ -52,8 +55,11 @@ func Solve(in io.Reader, out io.Writer) {
 	ret := Search(as[n-1]*bs[n-1], func(x int) bool {
 		cnt := 0
 		for _, a := range as {
+			// booleanを返す
+			// a*bs[i] > x がスライドで解説指定した箇所
 			cnt += Search(n, func(i int) bool { return a*bs[i] > x })
 		}
+		// booleanを返す
 		return cnt >= k
 	})
 	fmt.Fprintln(out, ret)
