@@ -1,60 +1,37 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"os"
-	"strconv"
-)
+import "fmt"
 
-var sc = bufio.NewScanner(os.Stdin)
-
-func init() {
-	sc.Split(bufio.ScanWords)
+type Stronger interface {
+	Body()
+	Brain()
 }
 
-func nextInt() int {
-	sc.Scan()
-	i, e := strconv.Atoi(sc.Text())
-	if e != nil {
-		panic(e)
-	}
-	return i
+type Animal struct {
+	height int
 }
 
-type Music struct {
-	Name string
-	Time int
+type Human struct {
+	brain string
+}
+
+func (h Animal) Body() {
+	fmt.Println("体でかい")
+}
+
+func (h Human) Brain() {
+	fmt.Println("頭脳派")
+}
+
+// インターフェースが引数になるメソッド
+func Really(s Stronger) {
+	s.Body()
+	s.Brain()
 }
 
 func main() {
-	var n int
-	fmt.Scanf("%d", &n)
-
-	playlist := make([]*Music, n) // [<nil> <nil> <nil>]
-	for i := 0; i < n; i++ {
-		var name string
-		var time int
-		fmt.Scanf("%s %d", &name, &time)
-		playlist[i] = &Music{
-			Name: name,
-			Time: time,
-		}
-	}
-
-	var x string
-	fmt.Scanf("%s", &x)
-
-	total := 0
-	start := false
-	for _, music := range playlist {
-		if start {
-			total += music.Time
-		}
-		if music.Name == x {
-			start = true
-		}
-	}
-
-	fmt.Printf("%d", total)
+	var animal Animal = Animal{height: 300}
+	fmt.Println(animal) // {300}
+	var wow Stronger
+	fmt.Println(wow) // nil
 }
