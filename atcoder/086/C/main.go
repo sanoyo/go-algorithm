@@ -13,6 +13,7 @@ func main() {
 
 		dt := abs(pt - t)
 		dl := abs(px-x) + abs(py-y)
+		// 毎秒 x + y の偶奇は変わるので 2 で割ったあまりは一致する必要がある。
 		if dt < dl || dt%2 != dl%2 {
 			fmt.Println("No")
 			return
