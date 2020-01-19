@@ -27,7 +27,6 @@ func main() {
 		fmt.Scan(&a[i])
 	}
 	dmin := math.MaxInt32
-	fmt.Println(dmin)
 	ans := 0
 	for bit := 0; bit < (1 << uint(n)); bit++ { // 肉の数でbit全探索
 		var A, B int
