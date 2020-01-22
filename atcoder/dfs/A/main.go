@@ -49,7 +49,7 @@ func main() {
 	}
 	// fmt.Println(reached[gy][gx])
 	// fmt.Println("------")
-	// dfs(sx, sy)
+	dfs(sx, sy)
 	// fmt.Println(reached[gy][gx])
 	if reached[gy][gx] {
 		fmt.Println("Yes")
