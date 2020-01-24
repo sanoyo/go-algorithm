@@ -1,70 +1,70 @@
-// https://atcoder.jp/contests/arc031/submissions/5810403
 package main
 
-import "fmt"
-
-var (
-	C      [10][10]rune
-	N      int // the number of lands
-	marked int
-	dy     = []int{1, 0, -1, 0}
-	dx     = []int{0, 1, 0, -1}
+import (
+	"fmt"
 )
 
-func main() {
-	for i := 0; i < 10; i++ {
-		var s string
-		fmt.Scan(&s)
-		for j := 0; j < 10; j++ {
-			C[i][j] = rune(s[j])
-			if C[i][j] == 'o' {
-				N++
+var seamap0 [][]byte
+var seamap1 [][]byte
+
+var dx = [4]int{1, -1, 0, 0}
+var dy = [4]int{0, 0, -1, 1}
+
+const h = 10
+const w = 10
+
+// 条件文
+// 再帰関数
+func dfs(y, x int) {
+	seamap1[y][x] = 'x'
+	// 4方向
+	for i := 0; i < 4; i++ {
+		nx := x + dx[i]
+		ny := y + dy[i]
+		if 0 <= nx && nx < 10 && 0 <= ny && ny < 10 && seamap1[ny][nx] == 'o' {
+			dfs(nx, ny)
+		}
+	}
+}
+
+func check(map1 [][]byte) bool {
+	for i := 0; i < h; i++ {
+		for j := 0; j < h; j++ {
+			if map1[i][j] == 'o' {
+				return false
 			}
 		}
 	}
 
-	for i := 0; i < 10; i++ {
-		for j := 0; j < 10; j++ {
-			if C[i][j] == 'o' {
+	return true
+}
+
+func main() {
+	seamap0 = make([][]byte, h)
+	seamap1 = make([][]byte, h)
+
+	for i := range seamap0 {
+		seamap0[i] = make([]byte, h)
+		seamap1[i] = make([]byte, h)
+		fmt.Scan(&seamap0[i])
+	}
+
+	// y軸
+	for y := 0; y < h; y++ {
+		// x軸
+		for x := 0; x < w; x++ {
+			// oならスキップ
+			if seamap0[y][x] == 'o' {
 				continue
 			}
-			C[i][j] = 'o'
-			if dfs(i, j) {
-				fmt.Println("YES")
+			seamap1[y][x] = 'o'
+			dfs(y, x)
+			if check(seamap1) {
+				fmt.Println("Yes")
 				return
 			}
-			C[i][j] = 'x'
-			reset()
 		}
 	}
-	fmt.Println("NO")
-}
-
-func dfs(y, x int) bool {
-	if marked == N {
-		return true
-	}
-	C[y][x] = '#'
-	marked++
-	for i := 0; i < len(dy); i++ {
-		ny := y + dy[i]
-		nx := x + dx[i]
-		if 0 <= nx && nx < 10 && 0 <= ny && ny < 10 && C[ny][nx] == 'o' {
-			if dfs(ny, nx) {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-func reset() {
-	marked = 0
-	for i := 0; i < 10; i++ {
-		for j := 0; j < 10; j++ {
-			if C[i][j] == '#' {
-				C[i][j] = 'o'
-			}
-		}
-	}
+	// 探索が終わっても出力されない場合は、Noを返す
+	fmt.Println("No")
 }
