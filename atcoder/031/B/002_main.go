@@ -19,7 +19,9 @@ func dfs(y, x int) {
 	seamap1[y][x] = 'x'
 	for i := 0; i < 4; i++ {
 		// 上だけの場合は、dx=1, dy=0にする必要があるため、このような変数を準備する
+		// 横移動
 		nx := x + dx[i]
+		// 上下移動
 		ny := y + dy[i]
 		if 0 <= nx && nx < w && 0 <= ny && ny < h && seamap1[ny][nx] == 'o' {
 			dfs(ny, nx)
@@ -57,6 +59,7 @@ func main() {
 			if seamap0[y][x] == 'x' { // (i,j)を埋め立てた場合、
 				//fmt.Printf("[%d, %d] 埋め立てる \n", j, i)
 
+				// seamap1に、seamap0と同じ配列の状態に戻す
 				mapinit()
 				seamap1[y][x] = 'o'
 				dfs(y, x)
