@@ -1,3 +1,4 @@
+// 002_main.go
 // https://atcoder.jp/contests/arc031/submissions/7030599
 package main
 
@@ -36,6 +37,7 @@ func mapinit() {
 }
 
 func check(smap [][]byte) bool {
+	fmt.Println(smap)
 	for i := range smap {
 		for j := range smap[i] {
 			if smap[i][j] == 'o' {
